@@ -1,0 +1,249 @@
+.calculator {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    font-family: Arial, sans-serif;
+}
+
+.input-group {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+}
+
+label {
+    width: 220px;
+    margin-right: 20px;
+}
+
+input[type="number"] {
+    width: 120px;
+    padding: 5px;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.3);
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.result {
+    font-size: 1.2em;
+    padding: 15px;
+    background-color: #f0f0f0;
+}
+
+.nav-links {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.nav-links a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.nav-links a:hover {
+    background-color: #f0f0f0;
+}
+/* Universal Navigation Styles */
+.skyrim-nav {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px 0;
+    border-bottom: 2px solid #4a4a4a;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 1.1em;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: #9d2525;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+/* Active Page Indicator */
+.nav-link.active {
+    background: rgba(169, 37, 37, 0.7);
+}
+
+.nav-link.active:hover {
+    background: rgba(169, 37, 37, 0.8);
+}
+
+.filterViewport ul li a.nav-item {
+    display: block;
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
+    padding: 10px 25px;
+    opacity: 0.6;
+    transition: 0.1s all;
+}
+
+.filterViewport ul li a.nav-item:hover {
+    padding: 10px 30px;
+    opacity: 1;
+}
+
+/* Remove default li padding since it's on the anchor now */
+.filterViewport ul li {
+    padding: 0 !important;
+}
+
+/* Add this to your existing styles */
+.filterViewport ul li a.nav-item:visited {
+    color: inherit !important; /* Matches original text color */
+}
+
+/* If you want to remove all link states coloring */
+.filterViewport ul li a.nav-item:link,
+.filterViewport ul li a.nav-item:visited,
+.filterViewport ul li a.nav-item:hover,
+.filterViewport ul li a.nav-item:active 
+{
+    color: inherit !important;
+}
+
+/* Unified Skyrim Styling */
+@import url('https://fonts.googleapis.com/css?family=Oswald:400,700,300');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Oswald', sans-serif;
+    color: #fff;
+    background: url(http://threepartstheory.files.wordpress.com/2011/11/elder-scrolls-skyrim-screenshot-4.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Navigation */
+.nav-links {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid #4a4a4a;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    margin: 0 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Calculator Containers */
+.calculator {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #4a4a4a;
+    border-radius: 5px;
+}
+
+/* Input Groups */
+.input-group {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+}
+
+.input-group label {
+    width: 250px;
+    margin-right: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+input[type="number"] {
+    width: 150px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #4a4a4a;
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.3);
+    accent-color: #9d2525;
+}
+
+button {
+    padding: 12px 30px;
+    font-size: 16px;
+    background: #9d2525;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+button:hover {
+    background: #7a1d1d;
+    transform: translateY(-2px);
+}
+
+.result {
+    padding: 20px;
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    font-size: 1.2em;
+}

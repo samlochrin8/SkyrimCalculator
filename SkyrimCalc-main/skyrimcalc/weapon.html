@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skyrim Weapon Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="weapon.html">Weapon Calculator</a>
+        <a href="armour.html">Armor Calculator</a>
+    </div>
+
+    <div class="calculator">
+        <h1>Skyrim Weapon Calculator</h1>
+
+        <h3>Smithing Parameters</h3>
+        <div class="input-group">
+            <label>Smithing Skill Level:</label>
+            <input type="number" id="smithingSkill" value="0" step="1">
+        </div>
+        <div class="input-group">
+            <label>Smithing Enchantment (%):</label>
+            <input type="number" id="smithingEnchant" value="0" step="1">
+        </div>
+        <div class="input-group">
+            <label>Smithing Potion (%):</label>
+            <input type="number" id="smithingPotion" value="0" step="1">
+        </div>
+        <div class="input-group">
+            <label>Has Smithing Perk:</label>
+            <input type="checkbox" id="hasSmithingPerk">
+        </div>
+
+        <h3>Weapon Parameters</h3>
+        <div class="input-group">
+            <label>Weapon Skill Level:</label>
+            <input type="number" id="weaponSkill" value="100" step="1">
+        </div>
+        <div class="input-group">
+            <label>Perk Effect (%):</label>
+            <input type="number" id="perkEffect" value="100" step="1">
+        </div>
+        <div class="input-group">
+            <label>Item Enchantment (%):</label>
+            <input type="number" id="itemEffect" value="160" step="1">
+        </div>
+        <div class="input-group">
+            <label>Potion Effect (%):</label>
+            <input type="number" id="potionEffect" value="0" step="1">
+        </div>
+        <div class="input-group">
+            <label>Seeker of Might (%):</label>
+            <input type="number" id="seekerOfMight" value="0" step="10" min="0" max="10">
+        </div>
+
+        <h3>Base Values</h3>
+        <div class="input-group">
+            <label>Base Weapon Damage:</label>
+            <input type="number" id="baseDamage" value="24" step="1">
+        </div>
+        <div class="input-group">
+            <label>Arrow Damage (0 for melee):</label>
+            <input type="number" id="arrowDamage" value="24" step="1">
+        </div>
+
+        <button onclick="calculateDamage()">Calculate Damage</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        class DamageCalculator {
+            constructor(smithingSkill, smithingEnchant, smithingPotion,
+                      weaponSkill, perkEffect, itemEffect, potionEffect,
+                      seekerOfMight, hasSmithingPerk) {
+                this.smithingSkill = smithingSkill;
+                this.smithingEnchant = smithingEnchant;
+                this.smithingPotion = smithingPotion;
+                this.weaponSkill = weaponSkill;
+                this.perkEffect = perkEffect;
+                this.itemEffect = itemEffect;
+                this.potionEffect = potionEffect;
+                this.seekerOfMight = seekerOfMight;
+                this.hasSmithingPerk = hasSmithingPerk;
+            }
+    
+            runCalculations(baseDamage, arrowDamage) {
+                const smithingQuality = this.getSmithingQuality();
+                
+                const calculatedDamage = Math.floor(
+                    (baseDamage + smithingQuality) 
+                    * (1 + this.weaponSkill / 200) 
+                    * (1 + this.perkEffect) 
+                    * (1 + this.itemEffect) 
+                    * (1 + this.potionEffect) 
+                    * (1 + this.seekerOfMight)
+                    + arrowDamage
+                );
+    
+                return calculatedDamage;
+            }
+    
+            getSmithingQuality() {
+                if (this.smithingSkill < 14) return 0;
+    
+                const effectiveSkill = 
+                    (this.smithingSkill - 13.29) 
+                    * (1 + (this.hasSmithingPerk ? 1 : 0)) 
+                    * (1 + this.smithingEnchant) 
+                    * (1 + this.smithingPotion) 
+                    + 13.29;
+    
+                const qualityLevel = Math.floor((effectiveSkill + 38) * 3 / 103);
+                const smithingQuality = 3.6 * qualityLevel - 1.6;
+    
+                return Math.ceil(smithingQuality / 2);
+            }
+        }
+    
+        function calculateDamage() {
+            // Convert percentage inputs to decimal format
+            const parseInput = (id, isPercent = true) => {
+                const value = parseFloat(document.getElementById(id).value) || 0;
+                return isPercent ? value / 100 : value;
+            };
+    
+            // Collect all inputs
+            const params = {
+                smithingSkill:    parseInput('smithingSkill', false),
+                smithingEnchant: parseInput('smithingEnchant'),
+                smithingPotion:   parseInput('smithingPotion'),
+                weaponSkill:      parseInput('weaponSkill', false),
+                perkEffect:      parseInput('perkEffect'),
+                itemEffect:      parseInput('itemEffect'),
+                potionEffect:     parseInput('potionEffect'),
+                seekerOfMight:   parseInput('seekerOfMight'),
+                hasSmithingPerk:  document.getElementById('hasSmithingPerk').checked
+            };
+    
+            const baseDamage = parseInt(document.getElementById('baseDamage').value) || 0;
+            const arrowDamage = parseInt(document.getElementById('arrowDamage').value) || 0;
+    
+            // Create calculator instance
+            const calculator = new DamageCalculator(
+                params.smithingSkill,
+                params.smithingEnchant,
+                params.smithingPotion,
+                params.weaponSkill,
+                params.perkEffect,
+                params.itemEffect,
+                params.potionEffect,
+                params.seekerOfMight,
+                params.hasSmithingPerk
+            );
+    
+            // Calculate and display results
+            const damage = calculator.runCalculations(baseDamage, arrowDamage);
+            document.getElementById('result').textContent = 
+                `Final Displayed Damage: ${damage}`;
+        }
+    </script>
+    </body>
+    </html>

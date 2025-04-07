@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skyrim Item Database</title>
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,700,300" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Oswald', sans-serif;
+            color: #fff;
+            background: url(http://threepartstheory.files.wordpress.com/2011/11/elder-scrolls-skyrim-screenshot-4.jpg);
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .filterViewport {
+            padding: 20px 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: scroll;
+        }
+        /* Add this to your existing CSS */
+.filterViewport ul li a.nav-item,
+.filterViewport ul li a.nav-item:link,
+.filterViewport ul li a.nav-item:visited,
+.filterViewport ul li a.nav-item:hover,
+.filterViewport ul li a.nav-item:active {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+        .filterOne, .filterTwo {
+            height: 100%;
+            width: 150px;
+            position: absolute;
+            top: 0;
+        }
+
+        .filterOne ul li, .filterTwo ul li {
+            position: relative;
+            width: 100%;
+            text-transform: uppercase;
+            padding: 10px 25px;
+            opacity: 0.6;
+            transition: 0.1s all;
+            list-style: none;
+            cursor: pointer;
+        }
+
+        .filterOne ul li:hover, .filterTwo ul li:hover {
+            padding: 10px 30px;
+        }
+
+        .filterOne ul li.active, .filterTwo ul li.active {
+            padding: 10px 30px;
+            opacity: 1;
+        }
+
+        .filterArrow {
+            position: absolute;
+            width: 0;
+            height: 0;
+            right: -10px;
+            margin-top: -10px;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid rgba(0,0,0,0.8);
+        }
+
+        .filterOne {
+            left: 50px;
+            background: rgba(0,0,0,0.8);
+        }
+
+        .filterTwo {
+            left: 220px;
+            background: rgba(0,0,0,0.8);
+        }
+
+        .displayBox {
+            position: absolute;
+            bottom: 10%;
+            left: 500px;
+            width: 400px;
+            height: 200px;
+            background: rgba(0,0,0,0.8);
+            padding: 20px;
+        }
+
+        .calculator-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .calculator-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2em;
+            padding: 10px;
+            border: 2px solid #fff;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .calculator-links a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Oswald', sans-serif;
+            color: #fff;
+            background-size: cover;
+            background-attachment: fixed;
+            transition: background-image 1s ease-in-out;
+        }
+
+        .filterViewport {
+            padding: 20px 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: scroll;
+        }
+
+        .filterViewport ul li a.nav-item,
+        .filterViewport ul li a.nav-item:link,
+        .filterViewport ul li a.nav-item:visited,
+        .filterViewport ul li a.nav-item:hover,
+        .filterViewport ul li a.nav-item:active {
+            color: inherit !important;
+            text-decoration: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="filterTwo">
+        <div class="filterArrow"></div>
+<div class="filterViewport">
+    <ul>
+        <h1 style="font-size: 28px; margin-top: 0; text-align: center;">Calculators</h1>
+        <li class="active"></li>
+        <li>
+            <a href="weapon.html" class="nav-item">Weapon Calculator</a>
+        </li>
+        <li>
+            <a href="armour.html" class="nav-item">Armor Calculator</a>
+        </li>
+    </ul>
+</div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // ===== BACKGROUND SLIDESHOW ===== //
+        const backgroundImages = [
+            "images/skyrim-landscape-35.png",
+            "images/skyrim-landscape-7.png",
+            "images/skyrim-landscape-3.png",
+            "images/skyrim-landscape-24.png",
+            "images/skyrim-landscape-23.png",
+            "images/skyrim-landscape-4.png",
+            "images/skyrim-landscape-10.png",
+            "images/skyrim-landscape-6.png",
+            "images/skyrim-landscape-22.png",
+            "images/skyrim-landscape-9.png",
+            "images/skyrim-landscape-34.png",
+            "images/skyrim-landscape-1.png",
+            "images/skyrim-landscape-5.png"
+        ];
+    
+        // Configuration
+        const slideshowInterval = 8000; // 8 seconds between transitions
+        let currentBgIndex = 0;
+        let slideshowActive = true;
+    
+        // Preload all images
+        function preloadImages() {
+            backgroundImages.forEach(img => {
+                new Image().src = img;
+            });
+        }
+    
+        // Smooth background transition
+        function changeBackground() {
+            if (!slideshowActive) return;
+            
+            currentBgIndex = (currentBgIndex + 1) % backgroundImages.length;
+            document.body.style.backgroundImage = `url('${backgroundImages[currentBgIndex]}')`;
+        }
+    
+        // Initialize slideshow
+        function initSlideshow() {
+            preloadImages();
+            document.body.style.backgroundImage = `url('${backgroundImages[0]}')`;
+            setInterval(changeBackground, slideshowInterval);
+            
+            // Pause on window blur (tab switch)
+            window.addEventListener('blur', () => slideshowActive = false);
+            window.addEventListener('focus', () => slideshowActive = true);
+        }
+    
+        // Start when DOM is ready
+        document.addEventListener('DOMContentLoaded', initSlideshow);
+    
+        // ===== YOUR EXISTING NAVIGATION CODE ===== //
+        $(window).on('load', function() {
+            const halfHeight = $('li.active').outerHeight(true) / 2;
+    
+            $('li').on('click', function() {
+                const currentTop = $(this).offset().top;
+                const parentIndex = $(this).parent().index();
+                $(this).parent().find('li').removeClass('active');
+                $(this).addClass('active');
+                $('.filterArrow').eq(parentIndex).animate({
+                    'top': currentTop + halfHeight
+                }, 200);
+            });
+    
+            $('.filterViewport').on('scroll', function() {
+                const currIndex = $(this).index();
+                setArrowPos(currIndex, halfHeight);
+            });
+    
+            function setArrowPos(target, offset) {
+                $('.filterArrow').eq(target).css({
+                    'top': $('ul').eq(target).find('li.active').offset().top + offset
+                });
+            }
+    
+            setArrowPos(0, halfHeight);
+            setArrowPos(1, halfHeight);
+        });
+    </script>
+</body>
+</html>
